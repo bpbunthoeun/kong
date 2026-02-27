@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: one-gateway-cloudflared-dev
+  namespace: one-gateway-dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      pod: cloudflared
+  template:
+    metadata:
+      labels:
+        pod: cloudflared
+    spec:
+      serviceAccountName: one-gateway-sa-dev
+      dnsPolicy: ClusterFirst
+      containers:
+        - name: cloudflared
+          image: cloudflare/cloudflared:2025.11.1
+          env:
+            - name: TUNNEL_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: token-secret
+                  key: token
+          command:
+            - cloudflared
+            - tunnel
+            - --no-autoupdate
+            - --loglevel
+            - debug
+            - --metrics
+            - 0.0.0.0:2000
+            - run
+            # - --token
+            # - "$(TUNNEL_TOKEN)"
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+          volumeMounts:
+            - name: "cloudflared-token"
+              mountPath: "/mnt/secrets-store"
+              readOnly: true
+      volumes:
+        - name: cloudflared-token
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "cloudflared-token"
