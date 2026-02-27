@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: testing-dev-deployment
+  namespace: one-gateway-dev
+  labels:
+    app: testing-dev-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: testing-dev-deployment
+  template:
+    metadata:
+      labels:
+        app: testing-dev-deployment
+    spec:
+      containers:
+        - name: grad
+          image: rslim087/kubernetes-course-grade-submission-api:stateless
+          ports:
+          - containerPort: 3000
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "100m"
+              memory: "128Mi"

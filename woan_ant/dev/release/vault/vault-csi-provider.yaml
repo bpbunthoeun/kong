@@ -1,0 +1,20 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: cloudflared-token
+  namespace: one-gateway-dev
+spec:
+  provider: vault
+  secretObjects:
+    - secretName: "token-secret"
+      type: Opaque
+      data:
+        - objectName: "token"
+          key: "token"
+  parameters:
+    roleName: "one-gateway-role-dev"
+    vaultSkipTLSVerify: "true"
+    objects: |
+      - secretPath: "woan-ant/data/cloudflare/dev/one-gateway-dev-tunnel-token"
+        objectName: "token"
+        secretKey: "token"
