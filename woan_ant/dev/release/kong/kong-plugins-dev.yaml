@@ -1,0 +1,10 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: ratelimit-dev
+  namespace: one-gateway-dev
+config:
+  minute: 1     # Number of requests allowed per minute
+  policy: local
+  limit_by: ip
+plugin: rate-limiting

@@ -5,6 +5,8 @@ metadata:
   namespace: one-gateway-dev
   annotations:
     konghq.com/strip-path: "true"
+    konghq.com/plugins: ratelimit-dev
+    konghq.com/methods: "GET, POST"
 spec:
   ingressClassName: kong
   rules:
