@@ -6,6 +6,8 @@ Flutter => domain (Tunnel) => Kong => API.
 
 ## Kong
 
+### Rate limited
+
 **Note**:
 Kong installed via helm
 
@@ -125,7 +127,15 @@ Important:
 
 -f merges new env settings
 
+## Cloudflare
 
+### Rate-limited
+
+Cloudflare is edg to edg protection that we use.
+
+Go to Domain => Security => Security role
+
+Create new role for rate limited
 
 ## Setup Kubernetes
 
