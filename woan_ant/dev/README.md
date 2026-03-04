@@ -154,7 +154,7 @@ metadata:
 
 ### 2-Create deployment
 
-We will use busy box for testing purpose.
+We will use busy box for testing purpose.git
 
 ```yaml
 apiVersion: apps/v1
